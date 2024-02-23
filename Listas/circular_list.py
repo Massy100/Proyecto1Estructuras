@@ -1,4 +1,4 @@
-from node import Node
+from Listas.node import Node
 from typing import TypeVar, Generic
 
 T = TypeVar("T")

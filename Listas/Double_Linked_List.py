@@ -1,5 +1,5 @@
 from typing import TypeVar, Generic
-from node_double import NodeDouble
+from Listas.node_double import NodeDouble
 
 T = TypeVar("T")
 
