@@ -2,15 +2,16 @@ from node import Node
 from typing import TypeVar, Generic
 
 T = TypeVar("T")
+
+
 class CircularList(Generic[T]):
     def __init__(self):
         self.head: Node | None = None
         self.tail: Node | None = None
         self.size: int = 0
 
-
-    def append(self,data: T):
-        new_node= Node(data)
+    def append(self, data: T):
+        new_node = Node(data)
         if self.is_empty():
             self.head = new_node
             self.tail = new_node
@@ -41,6 +42,7 @@ class CircularList(Generic[T]):
             self.size += 1
 
         # Recorrer la lista
+
     def transversal(self) -> str:
         current = self.head
         result = ''
@@ -53,12 +55,11 @@ class CircularList(Generic[T]):
 
         return result
 
-
     def find_by(self, data: T) -> Node:
         current = self.head
 
         while current is not None:
-            if current.data ==  data:
+            if current.data == data:
                 return current
 
             else:
@@ -68,8 +69,7 @@ class CircularList(Generic[T]):
                 break
         raise Exception("El elemento no existe")
 
-    #ELIMINAR AL INICIO
-
+    # ELIMINAR AL INICIO
 
     def pop(self):
         if self.is_empty():
@@ -89,5 +89,3 @@ class CircularList(Generic[T]):
             self.tail.next = self.head
             self.size -= 1
             return current
-
-

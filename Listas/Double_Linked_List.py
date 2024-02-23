@@ -14,7 +14,7 @@ class DoublyLinkedList(Generic[T]):
         return self.head is None and self.tail is None
 
 
-    def insert_empty(self,data: T):
+    def insert_empty(self, data: T):
         new_node = NodeDouble(data)
         self.head = new_node
         self.tail = new_node
@@ -142,7 +142,7 @@ class DoublyLinkedList(Generic[T]):
             self.size -= 1
             return ref
 
-    def delete_at(self, pos: int ) -> NodeDouble:
+    def delete_at(self, pos: int) -> NodeDouble:
         if self.is_empty():
             raise Exception("LA LISTA ESTA VACIA")
         elif self.head is self.tail:
@@ -162,6 +162,3 @@ class DoublyLinkedList(Generic[T]):
             self.size -= 1
 
             return ref
-
-
-

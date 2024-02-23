@@ -3,6 +3,7 @@ from typing import TypeVar, Generic
 
 T = TypeVar("T")
 
+
 class SimplyLinkedList(Generic[T]):
     def __init__(self, ):
         self.size = 0
@@ -77,10 +78,13 @@ class SimplyLinkedList(Generic[T]):
         current = self.head
         result = ""
         while current is not None:
-            result += str(current)
+            result += str(current.data)
             if current is not self.tail:
                 result += "->"
 
             current = current.next
 
         return result
+
+    def reverse_transversal(self):
+        pass
