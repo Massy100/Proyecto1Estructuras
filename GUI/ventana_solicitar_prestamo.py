@@ -1,17 +1,18 @@
 import tkinter as tk
 from tkinter import Toplevel, filedialog, messagebox
 
-class VentanaRegistroAsociado(tk.Toplevel):
+class VentanaSolicitarPrestamo(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("Registrar Asociados")
+        self.title("Solicitar Prestamo")
         self.parent = parent
         self.geometry("400x400")  # Ajusta el tamaño de la ventana según necesites
         
         # Campos solicitados
-        campos = ["Código del asociado", "Nombre completo", "Dirección actual",
-                  "Teléfonos de contacto", "Número de DPI", "NIT", "Archivos adjuntos",
-                  "Referencias personales"]
+        campos = ['Código del préstamo', 'Código del asociado', 'Estado del préstamo',
+            'Monto solicitado', 'Número de cuotas', 'Monto aprobado', 'Ingresos mensuales del asociado',
+            'Garantía que deja el asociado', 'Archivos adjuntos', 'Plan de pagos',
+            'Historial de pagos']
         
         self.entries = {}
         
@@ -55,9 +56,8 @@ class VentanaRegistroAsociado(tk.Toplevel):
         
         # No olvides incluir la lógica para los archivos adjuntos
         
-        messagebox.showinfo("Registro exitoso", "Asociado registrado exitosamente")
+        messagebox.showinfo("Registro exitoso", "Prestamo solicitado exitosamente")
         
     def regresar(self):
         self.destroy()  
         self.parent.deiconify()
-

@@ -11,7 +11,6 @@ class VentanaGestion(Toplevel):
         tk.Label(self, text="Esta es la ventana de Gestión").pack(pady=20)
 
         tk.Button(self, text="Registrar Asociados", command=self.registrar_asociados).pack(pady=5)
-        tk.Button(self, text="Almacenar Archivos", command=self.almacenar_archivos).pack(pady=5)
         tk.Button(self, text="Agregar Eliminar Referencias", command=self.agregar_eliminar_referencias).pack(pady=5)
         tk.Button(self, text="Actualizar Datos", command=self.actualizar_datos).pack(pady=5)
         tk.Button(self, text="Eliminar Cuentas", command=self.eliminar_cuentas).pack(pady=5)
