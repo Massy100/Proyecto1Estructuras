@@ -1,21 +1,21 @@
 import tkinter as tk
+import uuid
 from tkinter import Toplevel, filedialog, messagebox
 from Objetos.asociados import Asociado
 
+
 class VentanaRegistroAsociado(tk.Toplevel):
-    def __init__(self, parent,lista_asociado):
+    def __init__(self, parent, lista_asociado):
         super().__init__(parent)
         self.title("Registrar Asociados")
         self.parent = parent
         self.lista_asociados = lista_asociado
         self.geometry("400x400")  # Ajusta el tamaño de la ventana según necesites
-
+        self.entries = {}
         # Campos solicitados
-        campos = ["Código del asociado", "Nombre completo", "Dirección actual",
+        campos = ["Nombre completo", "Dirección actual",
                   "Teléfono de contacto", "Número de DPI", "NIT", "Archivos adjuntos",
                   "Referencias personales"]
-
-        self.entries = {}
 
         for campo in campos:
             if campo != "Archivos adjuntos":
@@ -35,7 +35,7 @@ class VentanaRegistroAsociado(tk.Toplevel):
         btn_guardar = tk.Button(self, text="Guardar", command=self.guardar_datos)
         btn_guardar.pack(side=tk.TOP, pady=5)
         btn_regresar = tk.Button(self, text="Regresar", command=self.regresar)
-        btn_regresar.pack(side=tk.TOP, pady=5)
+        btn_regresar.pack(side=tk.TOP, pady=1)
         btn_mostrar_asociados = tk.Button(self, text="Mostrar Asociados", command=self.mostrar_lista_asociados)
         btn_mostrar_asociados.pack(side=tk.TOP, pady=5)
 
@@ -45,7 +45,8 @@ class VentanaRegistroAsociado(tk.Toplevel):
         print(filenames)  # Aquí puedes hacer algo con los nombres de los archivos seleccionados
 
     def guardar_datos(self):
-        codigo = self.entries["Código del asociado"].get()
+        codigo_aleatorio = str(uuid.uuid4())
+        codigo = codigo_aleatorio
         nombre = self.entries["Nombre completo"].get()
         direccion = self.entries["Dirección actual"].get()
         telefono = self.entries["Teléfono de contacto"].get()
