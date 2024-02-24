@@ -24,6 +24,27 @@ class SimplyLinkedList(Generic[T]):
             self.head = new_node
             self.size += 1
 
+    def remove_by_value(self, value):
+        if self.is_empty():
+            raise Exception("La lista está vacía")
+
+        current = self.head
+        if current.data.nombre == value:
+            self.head = current.next
+            self.size -= 1
+            return current.data
+
+        prev = None
+        while current is not None:
+            if current.data.nombre == value:
+                prev.next = current.next
+                self.size -= 1
+                return current.data
+            prev = current
+            current = current.next
+
+        raise ValueError(f"No se encontró ningún nodo con el valor '{value}' en la lista")
+
     def append(self, data: T):
         if self.is_empty():
             new_node = Node(data)
@@ -80,11 +101,14 @@ class SimplyLinkedList(Generic[T]):
         while current is not None:
             result += str(current.data)
             if current is not self.tail:
-                result += "->"
+                result += "\n"
 
             current = current.next
 
         return result
 
-    def reverse_transversal(self):
-        pass
+    def show(self):
+        """
+        Muestra los elementos de la lista enlazada.
+        """
+        return self.transversal()

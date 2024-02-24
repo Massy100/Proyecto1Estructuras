@@ -13,16 +13,13 @@ class DoublyLinkedList(Generic[T]):
     def is_empty(self) -> bool:
         return self.head is None and self.tail is None
 
-
     def insert_empty(self, data: T):
         new_node = NodeDouble(data)
         self.head = new_node
         self.tail = new_node
         self.size = 1
 
-
-
-    def prepend(self,data: T):
+    def prepend(self, data: T):
         if self.is_empty():
             self.insert_empty(data)
         else:
@@ -31,7 +28,6 @@ class DoublyLinkedList(Generic[T]):
             self.head.prev = new_node
             self.head = new_node
             self.size += 1
-
 
     def append(self, data: T):
         if self.is_empty():
@@ -105,7 +101,6 @@ class DoublyLinkedList(Generic[T]):
             ref.prev = new_node
             prev_node.next = new_node
             self.size += 1
-
 
     def unshift(self):
         if self.is_empty():
