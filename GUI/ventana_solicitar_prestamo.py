@@ -6,13 +6,13 @@ class VentanaSolicitarPrestamo(tk.Toplevel):
         super().__init__(parent)
         self.title("Solicitar Prestamo")
         self.parent = parent
-        self.geometry("400x400")  # Ajusta el tamaño de la ventana según necesites
+        self.geometry("800x800")  # Ajusta el tamaño de la ventana según necesites
         
         # Campos solicitados
         campos = ['Código del préstamo', 'Código del asociado', 'Estado del préstamo',
             'Monto solicitado', 'Número de cuotas', 'Monto aprobado', 'Ingresos mensuales del asociado',
-            'Garantía que deja el asociado', 'Archivos adjuntos', 'Plan de pagos',
-            'Historial de pagos']
+            'Garantía que deja el asociado', 'Plan de pagos',
+            'Historial de pagos', 'Archivos adjuntos']
         
         self.entries = {}
         

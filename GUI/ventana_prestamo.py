@@ -7,7 +7,7 @@ class VentanaPrestamo(Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.title("Prestamo Bancario")
-        self.geometry("300x200")
+        self.geometry("800x700")
         tk.Label(self, text="Esta es la ventana de Prestamo Bancario").pack(pady=20)
         
         tk.Button(self, text="Solicitar Prestamo Bancario", command=self.solicitar_prestamo).pack(pady=5)
