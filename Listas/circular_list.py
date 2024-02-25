@@ -47,11 +47,11 @@ class CircularList(Generic[T]):
         current = self.head
         result = ''
         while current is not self.tail:
-            result += str(current.data) + '->'
+            result += str(current.data) + "\n"
             current = current.next
 
         if current is not None:
-            result += str(current.data)
+            result += str(current.data) + "\n"
 
         return result
     

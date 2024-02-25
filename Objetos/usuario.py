@@ -16,5 +16,4 @@ class Usuario:
         self.estado = 'inactivo'
         
     def __str__(self):
-        return (f"{self.codigo_usuario}|{self.nombre_completo}|{self.correo_electronico}|"
-                f"{self.contrasena}|{self.puesto}|{self.estado}")
+        return (f"{self.codigo_usuario}|{self.nombre_completo}|{self.correo_electronico}|{self.contrasena}|{self.puesto}|{self.estado}")
