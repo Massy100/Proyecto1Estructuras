@@ -2,7 +2,10 @@ import tkinter as tk
 import uuid
 from tkinter import Toplevel, filedialog, messagebox
 from Objetos.asociados import Asociado
+import os
+import shutil
 
+codigo = 0
 
 class VentanaRegistroAsociado(tk.Toplevel):
     def __init__(self, parent, lista_asociado):
@@ -14,8 +17,8 @@ class VentanaRegistroAsociado(tk.Toplevel):
         self.entries = {}
         # Campos solicitados
         campos = ["Nombre completo", "Dirección actual",
-                  "Teléfono de contacto", "Número de DPI", "NIT", "Archivos adjuntos",
-                  "Referencias personales"]
+                  "Teléfono de contacto", "Número de DPI", "NIT",
+                  "Referencias personales", "Archivos adjuntos",]
 
         for campo in campos:
             if campo != "Archivos adjuntos":
@@ -36,26 +39,43 @@ class VentanaRegistroAsociado(tk.Toplevel):
         btn_guardar.pack(side=tk.TOP, pady=5)
         btn_regresar = tk.Button(self, text="Regresar", command=self.regresar)
         btn_regresar.pack(side=tk.TOP, pady=1)
-        btn_mostrar_asociados = tk.Button(self, text="Mostrar Asociados", command=self.mostrar_lista_asociados)
-        btn_mostrar_asociados.pack(side=tk.TOP, pady=5)
 
     def seleccionar_archivos(self):
+        # Definir la ruta de la carpeta donde se guardarán los archivos
+        ruta_carpeta = os.path.join(os.getcwd(), "Archivos")
+    
+        # Verificar si la carpeta existe. Si no, crearla.
+        if not os.path.exists(ruta_carpeta):
+            os.makedirs(ruta_carpeta)
+    
+        # Pedir al usuario que seleccione archivos
         filenames = filedialog.askopenfilenames(title="Seleccionar archivos",
-                                                filetypes=(("Todos los archivos", "*.*"),))
-        print(filenames)  # Aquí puedes hacer algo con los nombres de los archivos seleccionados
+                                            filetypes=(("Todos los archivos", "*.*"),))
+    
+        # Copiar cada archivo seleccionado a la carpeta "archivos"
+        for archivo in filenames:
+            # Obtener la extensión del archivo para conservarla
+            extension = os.path.splitext(archivo)[1]
+        
+            # Construir el nombre del archivo basado en el ID del cliente y la extensión original del archivo
+            nombre_archivo = f"{codigo}{extension}"
+            ruta_destino = os.path.join(ruta_carpeta, nombre_archivo)
+        
+            # Copiar el archivo a la carpeta "archivos" con el nuevo nombre
+            shutil.copy(archivo, ruta_destino)
+    
+        print(f"Archivos guardados en: {ruta_carpeta}")
 
+    
     def guardar_datos(self):
-        codigo_aleatorio = str(uuid.uuid4())
-        codigo = codigo_aleatorio
+        global codigo
+        codigo += 1  # Incrementa el ID para asegurar que sea único
         nombre = self.entries["Nombre completo"].get()
         direccion = self.entries["Dirección actual"].get()
         telefono = self.entries["Teléfono de contacto"].get()
         dpi = self.entries["Número de DPI"].get()
         nit = self.entries["NIT"].get()
-
-        asociado = Asociado(codigo, nombre, direccion, telefono, dpi, nit)
-
-        self.lista_asociados.append(asociado)
+        referencias = self.entries["Referencias personales"].get()
 
         todos_los_campos_llenos = True
         for label, entry in self.entries.items():
@@ -68,18 +88,14 @@ class VentanaRegistroAsociado(tk.Toplevel):
             return  # Detiene la función si algún campo está vacío
 
         # No olvides incluir la lógica para los archivos adjuntos
+        asociado = Asociado(codigo, nombre, direccion, telefono, dpi, nit, referencias)
 
+        self.lista_asociados.append(asociado)
+        
         messagebox.showinfo("Registro exitoso", "Asociado registrado exitosamente")
 
     def regresar(self):
         self.destroy()
         self.parent.deiconify()
 
-    def mostrar_lista_asociados(self):
-        ventana_lista = tk.Toplevel(self)
-        ventana_lista.title("Lista de Asociados")
-
-        texto_lista = tk.Text(ventana_lista)
-        texto_lista.pack()
-
-        texto_lista.insert(tk.END, self.lista_asociados.show())
+    

@@ -4,6 +4,3 @@ from Objetos.asociados import Asociado
 
 if __name__ == "__main__":
     main()
-
-
-

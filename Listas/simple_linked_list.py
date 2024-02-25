@@ -44,6 +44,27 @@ class SimplyLinkedList(Generic[T]):
             current = current.next
 
         raise ValueError(f"No se encontró ningún nodo con el valor '{value}' en la lista")
+    
+    def remove_by_id(self, value):
+        if self.is_empty():
+            raise Exception("La lista está vacía")
+
+        current = self.head
+        if current.data.codigo == value:
+            self.head = current.next
+            self.size -= 1
+            return current.data
+
+        prev = None
+        while current is not None:
+            if current.data.codigo == value:
+                prev.next = current.next
+                self.size -= 1
+                return current.data
+            prev = current
+            current = current.next
+
+        raise ValueError(f"No se encontró ningún nodo con el valor '{value}' en la lista")
 
     def append(self, data: T):
         if self.is_empty():
