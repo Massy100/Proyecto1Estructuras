@@ -1,7 +1,7 @@
 import tkinter as tk
 from GUI.ventana_gestion import VentanaGestion
 from GUI.ventana_prestamo import VentanaPrestamo
-from GUI.ventana_usuario import VentanaUsuario
+from GUI.ventana_iniciar_sesion import VentanaIniciarSesion
 
 
 class VentanaPrincipal(tk.Tk):
@@ -26,9 +26,9 @@ class VentanaPrincipal(tk.Tk):
         nueva_ventana.grab_set()  
 
     def abrir_usuario(self):
-        self.withdraw()
-        nueva_ventana = VentanaUsuario(self)
-        nueva_ventana.grab_set()  
+        self.withdraw() 
+        nueva_ventana = VentanaIniciarSesion(self)
+        nueva_ventana.grab_set()
 
 def main():
     app = VentanaPrincipal()

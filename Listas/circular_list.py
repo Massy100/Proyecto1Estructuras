@@ -54,6 +54,12 @@ class CircularList(Generic[T]):
             result += str(current.data)
 
         return result
+    
+    def show(self):
+        """
+        Muestra los elementos de la lista enlazada.
+        """
+        return self.transversal()
 
     def find_by(self, data: T) -> Node:
         current = self.head
@@ -89,3 +95,24 @@ class CircularList(Generic[T]):
             self.tail.next = self.head
             self.size -= 1
             return current
+        
+        
+    def remove_by_id(self, value):
+        if self.is_empty():
+            raise Exception("La lista está vacía")
+
+        current = self.head
+        if current.data.codigo_usuario == value:
+            self.head = current.next
+            self.size -= 1
+            return current.data
+
+        prev = None
+        while current is not None:
+            if current.data.codigo_usuario == value:
+                prev.next = current.next
+                self.size -= 1
+                return current.data
+            prev = current
+            current = current.next
+
