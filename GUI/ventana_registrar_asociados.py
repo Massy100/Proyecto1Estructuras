@@ -42,7 +42,7 @@ class VentanaRegistroAsociado(tk.Toplevel):
 
     def seleccionar_archivos(self):
         # Definir la ruta de la carpeta donde se guardarán los archivos
-        ruta_carpeta = os.path.join(os.getcwd(), "Archivos")
+        ruta_carpeta = os.path.join(os.getcwd(), "Archivos Asociado")
     
         # Verificar si la carpeta existe. Si no, crearla.
         if not os.path.exists(ruta_carpeta):
