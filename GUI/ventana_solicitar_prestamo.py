@@ -1,10 +1,17 @@
 import tkinter as tk
 from tkinter import Toplevel, filedialog, messagebox
+import os
+import shutil
+from Objetos.prestamo import Prestamo
+from Objetos.asociados import Asociado
+
+codigo_prestamo = 0
 
 class VentanaSolicitarPrestamo(tk.Toplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, lista_prestamo):
         super().__init__(parent)
         self.title("Solicitar Prestamo")
+        self.lista_prestamo = lista_prestamo
         self.parent = parent
         self.geometry("800x800")  # Ajusta el tamaño de la ventana según necesites
         
@@ -37,26 +44,60 @@ class VentanaSolicitarPrestamo(tk.Toplevel):
         btn_regresar.pack(side=tk.TOP, pady=5)
 
     def seleccionar_archivos(self):
+        # Definir la ruta de la carpeta donde se guardarán los archivos
+        ruta_carpeta = os.path.join(os.getcwd(), "Archivos Prestamo")
+    
+        # Verificar si la carpeta existe. Si no, crearla.
+        if not os.path.exists(ruta_carpeta):
+            os.makedirs(ruta_carpeta)
+    
+        # Pedir al usuario que seleccione archivos
         filenames = filedialog.askopenfilenames(title="Seleccionar archivos",
-                                                filetypes=(("Todos los archivos", "*.*"), ))
-        print(filenames)  # Aquí puedes hacer algo con los nombres de los archivos seleccionados
+                                            filetypes=(("Todos los archivos", "*.*"),))
+    
+        # Copiar cada archivo seleccionado a la carpeta "archivos"
+        for archivo in filenames:
+            # Obtener la extensión del archivo para conservarla
+            extension = os.path.splitext(archivo)[1]
+        
+            # Construir el nombre del archivo basado en el ID del cliente y la extensión original del archivo
+            nombre_archivo = f"{codigo_prestamo}{extension}"
+            ruta_destino = os.path.join(ruta_carpeta, nombre_archivo)
+        
+            # Copiar el archivo a la carpeta "archivos" con el nuevo nombre
+            shutil.copy(archivo, ruta_destino)
+    
+        print(f"Archivos guardados en: {ruta_carpeta}")
 
     def guardar_datos(self):
-        # Aquí puedes implementar la lógica para guardar los datos ingresados
-            
+        global codigo_prestamo
+        codigo_prestamo += 1  # Incrementa el ID para asegurar que sea único
+        codigo_asociado = 1
+        estado = self.entries["Estado del préstamo"].get()
+        monto_solicitado = self.entries["Monto solicitado"].get()
+        numero_cuotas = self.entries["Número de cuotas"].get()
+        monto_aprobado = self.entries["Monto aprobado"].get()
+        ingresos_mensuales = self.entries["Ingresos mensuales del asociado"].get()
+        garantia = self.entries["Garantía que deja el asociado"].get()
+        plan_pagos = self.entries["Plan de pagos"].get()
+        historial_pagos = self.entries["Historial de pagos"].get()
+
         todos_los_campos_llenos = True
         for label, entry in self.entries.items():
             if not entry.get().strip():  # .strip() elimina espacios en blanco al principio y al final
                 messagebox.showwarning("Campo vacío", f"Por favor, complete el campo '{label}'.")
                 todos_los_campos_llenos = False
                 break  # Sale del ciclo si encuentra un campo vacío
-    
+
         if not todos_los_campos_llenos:
             return  # Detiene la función si algún campo está vacío
-        
+
         # No olvides incluir la lógica para los archivos adjuntos
+        prestamo = Prestamo(codigo_prestamo, codigo_asociado, monto_solicitado, numero_cuotas, monto_aprobado, ingresos_mensuales, garantia, plan_pagos, historial_pagos)
+
+        self.lista_prestamo.append(prestamo)
         
-        messagebox.showinfo("Registro exitoso", "Prestamo solicitado exitosamente")
+        messagebox.showinfo("Registro exitoso", "Prestamo creado exitosamente")
         
     def regresar(self):
         self.destroy()  
