@@ -6,39 +6,39 @@ T = TypeVar("T")
 
 class SimplyLinkedList(Generic[T]):
     def __init__(self, ):
-        self.size = 0
-        self.head = None
-        self.tail = None
+        self.__size = 0
+        self.__head = None
+        self.__tail = None
 
     def is_empty(self):
-        return self.head is None and self.tail is None
+        return self.__head is None and self.__tail is None
 
     def unshift(self, data: T):
         new_node = Node(data)
         if self.is_empty():
-            self.head = new_node
-            self.tail = new_node
-            self.size += 1
+            self.__head = new_node
+            self.__tail = new_node
+            self.__size += 1
         else:
-            new_node.next = self.head
-            self.head = new_node
-            self.size += 1
+            new_node.next = self.__head
+            self.__head = new_node
+            self.__size += 1
 
     def remove_by_value(self, value):
         if self.is_empty():
             raise Exception("La lista está vacía")
 
-        current = self.head
+        current = self.__head
         if current.data.nombre == value:
-            self.head = current.next
-            self.size -= 1
+            self.__head = current.next
+            self.__size -= 1
             return current.data
 
         prev = None
         while current is not None:
             if current.data.nombre == value:
                 prev.next = current.next
-                self.size -= 1
+                self.__size -= 1
                 return current.data
             prev = current
             current = current.next
@@ -49,17 +49,17 @@ class SimplyLinkedList(Generic[T]):
         if self.is_empty():
             raise Exception("La lista está vacía")
 
-        current = self.head
+        current = self.__head
         if current.data.codigo == value:
-            self.head = current.next
-            self.size -= 1
+            self.__head = current.next
+            self.__size -= 1
             return current.data
 
         prev = None
         while current is not None:
             if current.data.codigo == value:
                 prev.next = current.next
-                self.size -= 1
+                self.__size -= 1
                 return current.data
             prev = current
             current = current.next
@@ -69,21 +69,21 @@ class SimplyLinkedList(Generic[T]):
     def append(self, data: T):
         if self.is_empty():
             new_node = Node(data)
-            self.head = new_node
-            self.tail = new_node
-            self.size += 1
+            self.__head = new_node
+            self.__tail = new_node
+            self.__size += 1
         else:
             new_node = Node(data)
-            self.tail.next = new_node
-            self.tail = new_node
-            self.size += 1
+            self.__tail.next = new_node
+            self.__tail = new_node
+            self.__size += 1
 
     def insert_at(self, data: T, index):
         if index == 0:
             self.unshift(data)
         elif self.is_empty():
             self.unshift(data)
-        elif index == self.size:
+        elif index == self.__size:
             self.append(data)
         else:
             new_node = Node(data)
@@ -94,7 +94,7 @@ class SimplyLinkedList(Generic[T]):
             return new_node
 
     def find_by(self, data: T):
-        current = self.head
+        current = self.__head
         while current is not None:
             if current.data == data:
                 return current
@@ -104,7 +104,7 @@ class SimplyLinkedList(Generic[T]):
         raise Exception("El elemento no esta en la cola")
 
     def find_at(self, index):
-        current = self.head
+        current = self.__head
         contador = 0
 
         while current is not None:
@@ -117,11 +117,11 @@ class SimplyLinkedList(Generic[T]):
         raise Exception("La posicion no existe")
 
     def transversal(self):
-        current = self.head
+        current = self.__head
         result = ""
         while current is not None:
             result += str(current.data)
-            if current is not self.tail:
+            if current is not self.__tail:
                 result += "\n"
 
             current = current.next
