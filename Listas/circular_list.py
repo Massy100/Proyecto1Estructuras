@@ -21,7 +21,7 @@ class CircularList(Generic[T]):
             self.__tail.next = new_node
             self.__tail = new_node
             self.__tail.next = self.__head
-        self.size += 1
+        self.__size += 1
 
     def is_empty(self):
         return self.__head is None and self.__tail is None
@@ -95,8 +95,7 @@ class CircularList(Generic[T]):
             self.__tail.next = self.__head
             self.__size -= 1
             return current
-        
-        
+
     def remove_by_id(self, value):
         if self.is_empty():
             raise Exception("La lista está vacía")

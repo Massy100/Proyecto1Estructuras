@@ -1,9 +1,8 @@
 import tkinter as tk
-from tkinter import Toplevel, filedialog, messagebox
+from tkinter import filedialog, messagebox
 import os
 import shutil
 from Objetos.prestamo import Prestamo
-from Objetos.asociados import Asociado
 
 codigo_prestamo = 0
 
