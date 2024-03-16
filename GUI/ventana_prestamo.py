@@ -1,7 +1,9 @@
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from tkinter import Toplevel
 from GUI.ventana_solicitar_prestamo import VentanaSolicitarPrestamo
 from Listas.Double_Linked_List import DoublyLinkedList
+from GUI.VentanaVisualizarPrestamo import VentanaVisualizarPrestamos
+from GUI.ventanaaprobarprestamo import VentanaAprobarPrestamos
 
 
 class VentanaPrestamo(Toplevel):
@@ -13,11 +15,11 @@ class VentanaPrestamo(Toplevel):
         self.geometry("800x700")
 
         style = ttk.Style()
-        style.configure("TButton", foreground="Black", background="Purple", font=("Comic Sans MS", 12), padding=10)
+        style.configure("TButton", foreground="Black", background="Green", font=("Comic Sans MS", 12), padding=10)
         style.map("TButton", background=[("active", "Purple")])
 
         style = ttk.Style()
-        style.configure("TLabelCustom.TLabel", foreground="white", background="Purple", font=("Comic Sans MS", 12),
+        style.configure("TLabelCustom.TLabel", foreground="white", background="Green", font=("Comic Sans MS", 12),
                         padding=10)
         ttk.Label(self, text="Esta es la ventana de Prestamo Bancario",style="TLabelCustom.TLabel").pack(pady=20)
 
@@ -44,10 +46,21 @@ class VentanaPrestamo(Toplevel):
         pass
 
     def aprobar_prestamos(self):
-        pass
+        if self.lista_prestamo.is_empty():
+            messagebox.showinfo("No hay préstamos", "No hay préstamos para aprobar.")
+        else:
+            nueva_ventana = VentanaAprobarPrestamos(self,
+                                                    self.lista_prestamo.transversal())  # Pasamos la lista transversalizada
+            nueva_ventana.grab_set()
 
     def visualizar_prestamos(self):
-        pass
+        if self.lista_prestamo.is_empty():
+            nueva_ventana = VentanaVisualizarPrestamos(self, self.lista_prestamo)
+            nueva_ventana.grab_set()
+
+        else:
+            nueva_ventana = VentanaVisualizarPrestamos(self, self.lista_prestamo)
+            nueva_ventana.grab_set()
 
     def realizar_pagos(self):
         pass

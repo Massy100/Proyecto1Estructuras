@@ -1,6 +1,7 @@
 from typing import TypeVar, Generic
 from Listas.node_double import NodeDouble
 
+
 T = TypeVar("T")
 
 
@@ -166,5 +167,13 @@ class DoublyLinkedList(Generic[T]):
                 result += "->"
             current = current.prev
         return result
+
+    def aprobar_prestamos(self):
+        if self.lista_prestamo.is_empty():
+            messagebox.showinfo("No hay préstamos", "No hay préstamos para aprobar.")
+        else:
+            nueva_ventana = VentanaAprobarPrestamos(self, self.lista_prestamo)
+            nueva_ventana.grab_set()
+
 
     

@@ -12,13 +12,13 @@ class VentanaPrincipal(tk.Tk):
         self.title("Ventana Principal")
         self.geometry("500x300")
         self.minsize(480, 300)
-        self.configure(bg="Black")
+        self.configure(bg="white")
 
         style = ttk.Style()
-        style.configure("TButton", foreground="Black", background="green", font=("Comic Sans MS", 12), padding=10)
+        style.configure("TButton", foreground="Black", background="Green", font=("Comic Sans MS", 12), padding=10)
         style.map("TButton", background=[("active", "Green")])
 
-        contenedor = tk.Frame(self, bg="Black")
+        contenedor = tk.Frame(self, bg="White")
         contenedor.pack(padx=20, pady=20)
 
         ttk.Button(contenedor, text="Gestión de Asociados", command=self.abrir_gestion, style="TButton").grid(row=0, column=0, pady=5, sticky="ew")

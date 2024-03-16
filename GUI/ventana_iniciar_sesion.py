@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 from tkinter import Toplevel
 from Objetos.usuario import Usuario
@@ -8,13 +9,22 @@ class VentanaIniciarSesion(Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Iniciar Sesión")
+        self.parent = parent
+
 
         # Preestablecer un super usuario
         self.super_usuario = Usuario(0, "Super Usuario", "user@gmail.com", "12345", "Administrador", True)
+        newstyle = ttk.Style()
+        newstyle.configure("TButton", foreground="Black", background="Green", font=("Comic Sans MS", 8), padding=1)
+        newstyle.map("TButton", background=[("active", "Green")])
+
+        newstyle = ttk.Style()
+        newstyle.configure("TLabelCustom.TLabel", foreground="white", background="Green", font=("Comic Sans MS", 12),
+                        padding=10)
 
         # Crear widgets
-        tk.Label(self, text="Correo Electrónico:").grid(row=0)
-        tk.Label(self, text="Contraseña:").grid(row=1)
+        ttk.Label(self, text="Correo Electrónico:").grid(row=0)
+        ttk.Label(self, text="Contraseña:").grid(row=1)
 
         self.correo = tk.Entry(self)
         self.contraseña = tk.Entry(self, show="*")
@@ -22,10 +32,10 @@ class VentanaIniciarSesion(Toplevel):
         self.correo.grid(row=0, column=1)
         self.contraseña.grid(row=1, column=1)
 
-        tk.Button(self, text="Iniciar Sesión", command=self.iniciar_sesion).grid(row=2, column=1, sticky=tk.W, pady=4)
+        ttk.Button(self, text="Iniciar Sesión", command=self.iniciar_sesion, style="TButton").grid(row=2, column=1, sticky=tk.W, pady=4)
 
         # Botón para regresar a la ventana principal
-        btn_regresar = tk.Button(self, text="Regresar", command=self.regresar_principal)
+        btn_regresar = ttk.Button(self, text="Regresar", command=self.regresar,style="TButton")
         btn_regresar.grid(row=3, column=1, sticky=tk.W, pady=10)
 
     def iniciar_sesion(self):
@@ -40,6 +50,6 @@ class VentanaIniciarSesion(Toplevel):
         else:
             messagebox.showerror("Error", "Correo electrónico o contraseña incorrecta")
             
-    def regresar_principal(self):
-        self.destroy()  # Cierra la ventana de gestión
-        self.parent.deiconify()  # Muestra la ventana principal nuevamente
+    def regresar(self):
+        self.destroy()
+        self.parent.deiconify()
