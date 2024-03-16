@@ -3,7 +3,7 @@ from tkinter import Toplevel
 from GUI.ventana_solicitar_prestamo import VentanaSolicitarPrestamo
 from Listas.Double_Linked_List import DoublyLinkedList
 from GUI.VentanaVisualizarPrestamo import VentanaVisualizarPrestamos
-from GUI.ventanaaprobarprestamo import VentanaAprobarPrestamos
+from GUI.ventana_realizar_pago import VentanaRealizarPagos
 
 
 class VentanaPrestamo(Toplevel):
@@ -25,7 +25,6 @@ class VentanaPrestamo(Toplevel):
 
         ttk.Button(self, text="Solicitar Prestamo Bancario", command=self.solicitar_prestamo).pack(pady=5)
         ttk.Button(self, text="Generar Planes de Credito", command=self.generar_plan).pack(pady=5)
-        ttk.Button(self, text="Aprobar Prestamos", command=self.aprobar_prestamos).pack(pady=5)
         ttk.Button(self, text="Visualizar los Prestamos Generados", command=self.visualizar_prestamos).pack(pady=5)
         ttk.Button(self, text="Realizar Pagos", command=self.realizar_pagos).pack(pady=5)
 
@@ -45,14 +44,6 @@ class VentanaPrestamo(Toplevel):
     def generar_plan(self):
         pass
 
-    def aprobar_prestamos(self):
-        if self.lista_prestamo.is_empty():
-            messagebox.showinfo("No hay préstamos", "No hay préstamos para aprobar.")
-        else:
-            nueva_ventana = VentanaAprobarPrestamos(self,
-                                                    self.lista_prestamo.transversal())  # Pasamos la lista transversalizada
-            nueva_ventana.grab_set()
-
     def visualizar_prestamos(self):
         if self.lista_prestamo.is_empty():
             nueva_ventana = VentanaVisualizarPrestamos(self, self.lista_prestamo)
@@ -63,4 +54,6 @@ class VentanaPrestamo(Toplevel):
             nueva_ventana.grab_set()
 
     def realizar_pagos(self):
-        pass
+        self.withdraw()
+        nueva_ventana = VentanaRealizarPagos(self, self.lista_prestamo)
+        nueva_ventana.grab_set()

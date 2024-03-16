@@ -20,6 +20,12 @@ class DoublyLinkedList(Generic[T]):
         self.__tail = new_node
         self.__size = 1
         
+    def __iter__(self):
+        current = self.__head
+        while current is not None:
+            yield current.data
+            current = current.next
+        
     # METODOS DE INSERCION
     # inserta por la cabeza (orden descendente)
     def prepend(self, data: T):
@@ -167,13 +173,6 @@ class DoublyLinkedList(Generic[T]):
                 result += "->"
             current = current.prev
         return result
-
-    def aprobar_prestamos(self):
-        if self.lista_prestamo.is_empty():
-            messagebox.showinfo("No hay préstamos", "No hay préstamos para aprobar.")
-        else:
-            nueva_ventana = VentanaAprobarPrestamos(self, self.lista_prestamo)
-            nueva_ventana.grab_set()
 
 
     
