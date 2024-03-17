@@ -12,6 +12,7 @@ class VentanaGestion(Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.lista_asociados = SimplyLinkedList()
+        self.lista_referencias = SimplyLinkedList()
         self.title("Gestión de Asociados")
         self.geometry("500x400")
 
@@ -70,8 +71,12 @@ class VentanaGestion(Toplevel):
         ancho_pantalla = ventana_lista.winfo_screenwidth()
         alto_pantalla = ventana_lista.winfo_screenheight()
         ventana_lista.geometry(f"{ancho_pantalla}x{alto_pantalla}")
+        
+        # Crear un Frame como contenedor del Treeview y las Scrollbars
+        contenedor = ttk.Frame(ventana_lista)
+        contenedor.pack(fill="both", expand=True)
 
-        tree = tk.ttk.Treeview(ventana_lista,
+        tree = ttk.Treeview(contenedor,
                                columns=("Código", "Nombre", "Dirección", "Teléfono", "DPI", "NIT", "Referencias"),
                                show="headings")
         tree.heading("Código", text="Código")
@@ -90,24 +95,27 @@ class VentanaGestion(Toplevel):
         tree.column("DPI", width=200)
         tree.column("NIT", width=150)
         tree.column("Referencias", width=150)
+        
+        # Crear Scrollbar vertical y configurarla para que funcione con el Treeview
+        scrollbar_vertical = ttk.Scrollbar(contenedor, orient="vertical", command=tree.yview)
+        scrollbar_vertical.pack(side="right", fill="y")
 
-        datos_str = self.lista_asociados.show()
+        # Crear Scrollbar horizontal y configurarla para que funcione con el Treeview
+        scrollbar_horizontal = ttk.Scrollbar(contenedor, orient="horizontal", command=tree.xview)
+        scrollbar_horizontal.pack(side="bottom", fill="x")
 
-        # Divide los datos de usuarios en líneas individuales
-        lineas_datos = self.lista_asociados.show().strip().split('\n')
+        # Configurar el Treeview para que use las Scrollbars
+        tree.configure(yscrollcommand=scrollbar_vertical.set, xscrollcommand=scrollbar_horizontal.set)
+        tree.pack(fill="both", expand=True)
 
-        # Procesa cada línea (usuario) individualmente
-        for datos_str in lineas_datos:
-            # Divide la cadena de datos del usuario en partes basándonos en el separador '|'
-            datos = datos_str.split('|')
+        for asociado in self.lista_asociados:
+            # Convertir las referencias personales de cada asociado a una cadena de texto
+            referencias_str = ", ".join([f"{ref.nombre} ({ref.relacion})" for ref in asociado.referencias])
+            # Preparar los datos del asociado para insertarlos en el Treeview
+            datos = (asociado.codigo, asociado.nombre, asociado.direccion, asociado.telefono, asociado.dpi, asociado.nit, referencias_str)
+            tree.insert("", tk.END, values=datos)
 
-            # Verifica que el número de elementos en 'datos' coincida con el número de columnas en el Treeview
-            if len(datos) == len(tree["columns"]):
-                # Inserta los datos del usuario actual en el Treeview
-                tree.insert("", tk.END, values=tuple(datos))
-            else:
-                print(
-                    f"Error: El número de datos ({len(datos)}) no coincide con el número de columnas ({len(tree['columns'])}).")
+        tree.pack(expand=True, fill="both") 
 
         btn_editar = tk.Button(ventana_lista, text="Editar", command=lambda: self.editar_asociado(tree))
         btn_editar.pack(pady=5)

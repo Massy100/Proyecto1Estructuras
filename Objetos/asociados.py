@@ -1,13 +1,14 @@
-# CLASE DONDE SE ALMACENARAN LOS DATOS DE LOS ASOCIADOS
+from Listas.simple_linked_list import SimplyLinkedList
+
 class Asociado:
-    def __init__(self, codigo, nombre, direccion, telefono, dpi, nit, referencias):
+    def __init__(self, codigo, nombre, direccion, telefono, dpi, nit):
         self.codigo = codigo
         self.nombre = nombre
         self.direccion = direccion
         self.telefono = telefono
         self.dpi = dpi
         self.nit = nit
-        self.referencias = referencias
+        self.referencias = SimplyLinkedList()
 
 
     def __str__(self):

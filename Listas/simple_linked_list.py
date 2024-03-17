@@ -133,3 +133,32 @@ class SimplyLinkedList(Generic[T]):
         Muestra los elementos de la lista enlazada.
         """
         return self.transversal()
+    
+    def find_by_codigo(self, codigo):
+        codigo = codigo - 1
+        print(f"Buscando el código: {codigo}")  # Debería mostrar el código que estás buscando, no un método
+
+        if self.__head is None:
+            print("La lista está vacía.")
+            raise Exception("La lista de asociados está vacía.")
+
+        current = self.__head
+        while current is not None:
+            print(f"Comparando con: {current.data.codigo}")  # Esto te mostrará con qué estás comparando
+            if str(current.data.codigo) == str(codigo):
+                print("Asociado encontrado")
+                return current.data
+            current = current.next
+
+        print("El asociado no está en la lista.")
+        raise Exception("El asociado no está en la lista")
+    
+    def __iter__(self):
+        current = self.__head
+        while current:
+            yield current.data
+            current = current.next
+    
+
+
+

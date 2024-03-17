@@ -4,24 +4,30 @@ from tkinter import Toplevel, filedialog, messagebox
 from Objetos.asociados import Asociado
 import os
 import shutil
+from GUI.ventana_agregar_referencia import VentanaAgregarReferencia
+from Objetos.referencia_personal import ReferenciaPersonal
 
-codigo = 0
+codigo = 1
 
 class VentanaRegistroAsociado(tk.Toplevel):
-    def __init__(self, parent, lista_asociado):
+    def __init__(self, parent, lista_asociados):
         super().__init__(parent)
         self.title("Registrar Asociados")
         self.parent = parent
-        self.lista_asociados = lista_asociado
+        self.lista_asociados = lista_asociados
         self.geometry("400x400")  # Ajusta el tamaño de la ventana según necesites
         self.entries = {}
+        
         # Campos solicitados
         campos = ["Nombre completo", "Dirección actual",
                   "Teléfono de contacto", "Número de DPI", "NIT",
                   "Referencias personales", "Archivos adjuntos",]
 
         for campo in campos:
-            if campo != "Archivos adjuntos":
+            if campo == "Referencias personales":
+                btn_agregar_referencia = tk.Button(self, text="Agregar Referencia", command=self.abrir_ventana_referencias)
+                btn_agregar_referencia.pack(side=tk.TOP, pady=5)
+            elif campo != "Archivos adjuntos":
                 row = tk.Frame(self)
                 label = tk.Label(row, width=22, text=campo + ":", anchor='w')
                 entry = tk.Entry(row)
@@ -69,33 +75,31 @@ class VentanaRegistroAsociado(tk.Toplevel):
     
     def guardar_datos(self):
         global codigo
-        codigo += 1  # Incrementa el ID para asegurar que sea único
+        # Recolecta los datos de los Entry widgets
         nombre = self.entries["Nombre completo"].get()
         direccion = self.entries["Dirección actual"].get()
         telefono = self.entries["Teléfono de contacto"].get()
         dpi = self.entries["Número de DPI"].get()
         nit = self.entries["NIT"].get()
-        referencias = self.entries["Referencias personales"].get()
 
-        todos_los_campos_llenos = True
-        for label, entry in self.entries.items():
-            if not entry.get().strip():  # .strip() elimina espacios en blanco al principio y al final
-                messagebox.showwarning("Campo vacío", f"Por favor, complete el campo '{label}'.")
-                todos_los_campos_llenos = False
-                break  # Sale del ciclo si encuentra un campo vacío
-
-        if not todos_los_campos_llenos:
-            return  # Detiene la función si algún campo está vacío
-
-        # No olvides incluir la lógica para los archivos adjuntos
-        asociado = Asociado(codigo, nombre, direccion, telefono, dpi, nit, referencias)
-
-        self.lista_asociados.append(asociado)
-        
-        messagebox.showinfo("Registro exitoso", "Asociado registrado exitosamente")
+        # Crea una nueva instancia de Asociado
+        nuevo_asociado = Asociado(codigo, nombre, direccion, telefono, dpi, nit)
+        self.lista_asociados.append(nuevo_asociado)  # Añade el asociado a la lista
+    
+        # Incrementa el código para el próximo asociado
+        codigo += 1
+    
+        tk.messagebox.showinfo("Éxito", "Asociado registrado exitosamente.")
 
     def regresar(self):
         self.destroy()
         self.parent.deiconify()
+        
+    def abrir_ventana_referencias(self):
+        # Asume que tienes una clase VentanaAgregarReferencia diseñada para agregar referencias
+        # Aquí, podrías pasar cualquier dato necesario, como el código del asociado actual
+        global codigo
+        ventana_referencias = VentanaAgregarReferencia(self, codigo, self.lista_asociados)
+        ventana_referencias.grab_set()  # Hace la ventana modal
 
     
