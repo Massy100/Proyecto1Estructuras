@@ -4,6 +4,8 @@ from GUI.ventana_solicitar_prestamo import VentanaSolicitarPrestamo
 from Listas.Double_Linked_List import DoublyLinkedList
 from GUI.VentanaVisualizarPrestamo import VentanaVisualizarPrestamos
 from GUI.ventana_realizar_pago import VentanaRealizarPagos
+from Listas.simple_linked_list import SimplyLinkedList
+from GUI.ventana_generar_plan import VentanaGenerarPlan
 
 
 class VentanaPrestamo(Toplevel):
@@ -11,6 +13,7 @@ class VentanaPrestamo(Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.lista_prestamo = DoublyLinkedList()
+        self.lista_planes = SimplyLinkedList()
         self.title("Prestamo Bancario")
         self.geometry("800x700")
 
@@ -42,7 +45,9 @@ class VentanaPrestamo(Toplevel):
         nueva_ventana.grab_set()
 
     def generar_plan(self):
-        pass
+        self.withdraw()
+        nueva_ventana = VentanaGenerarPlan(self, self.lista_prestamo, self.lista_planes)
+        nueva_ventana.grab_set()
 
     def visualizar_prestamos(self):
         if self.lista_prestamo.is_empty():

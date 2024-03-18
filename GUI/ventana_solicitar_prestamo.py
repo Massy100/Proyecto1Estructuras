@@ -35,6 +35,12 @@ class VentanaSolicitarPrestamo(tk.Toplevel):
                         estado_combobox = ttk.Combobox(row, values=estado_values)
                         estado_combobox.pack(side=tk.RIGHT)
                         self.entries[campo] = estado_combobox
+                    elif campo == "Plan de pagos":
+                        # Aquí se agrega el ComboBox para el plan de pagos
+                        plan_pagos_values = ["Mensual", "Bimensual", "Trimestral"]
+                        plan_pagos_combobox = ttk.Combobox(row, values=plan_pagos_values)
+                        plan_pagos_combobox.pack(side=tk.RIGHT)
+                        self.entries[campo] = plan_pagos_combobox
                     else:
                         entry = tk.Entry(row)
                         entry.pack(side=tk.RIGHT, expand=tk.YES, fill=tk.X)
