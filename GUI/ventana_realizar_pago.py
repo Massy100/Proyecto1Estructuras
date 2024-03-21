@@ -4,11 +4,12 @@ from tkinter import ttk
 from tkinter import messagebox
 
 class VentanaRealizarPagos(tk.Toplevel):
-    def __init__(self, master, lista_prestamo):
-        super().__init__(master)
+    def __init__(self, parent, lista_prestamo):
+        super().__init__(parent)
         self.title("Realizar Pagos")
         self.geometry("400x300")
         self.lista_prestamo = lista_prestamo
+        self.parent = parent
 
         # Inicializa prestamo_actual como None
         self.prestamo_actual = None
